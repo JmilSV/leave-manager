@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\Vovk\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\Vovk\\.nuget\\packages"
+    ]
+  }
+}
