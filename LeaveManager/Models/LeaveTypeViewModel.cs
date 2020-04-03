@@ -11,6 +11,7 @@ namespace LeaveManager.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        [Display(Name = "Created Date")]
         public DateTime DateCreated { get; set; }
     }
 }

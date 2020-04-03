@@ -35,18 +35,29 @@ namespace LeaveManager.Data.Repositories
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var leaveType = await GetAsync(id).ConfigureAwait(false);
-            if (leaveType == null)
-                return false;
+            if (!await IsExistAsync(id))
+                throw new Exception($"Entity with {id} doesn't exist!");
 
+            var leaveType = await GetAsync(id).ConfigureAwait(false);
             context.LeaveTypes.Remove(leaveType);
             return await SaveAsync().ConfigureAwait(false) == 1;
         }
 
-        public async Task<bool> UpdateAsync(LeaveType entity)
+        public async Task<bool> UpdateAsync(LeaveType leaveType)
         {
-            context.LeaveTypes.Update(entity);
+            if (leaveType == null)
+                throw new ArgumentNullException(paramName: nameof(leaveType));
+            if (!await IsExistAsync(leaveType.Id))
+                throw new Exception($"Entity with {leaveType.Id} doesn't exist!");
+
+            context.LeaveTypes.Update(leaveType);
             return await SaveAsync().ConfigureAwait(false) == 1;
+        }
+
+        public async Task<bool> IsExistAsync(int id)
+        {
+            return await context.LeaveTypes.AsNoTracking()
+                .AnyAsync(it => it.Id == id).ConfigureAwait(false);
         }
 
         public Task<int> SaveAsync()

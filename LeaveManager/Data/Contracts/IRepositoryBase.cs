@@ -13,5 +13,6 @@ namespace LeaveManager.Data.Contracts
         Task<bool> UpdateAsync(T entity);
         Task<bool> DeleteAsync(int id);
         Task<int> SaveAsync();
+        Task<bool> IsExistAsync(int id);
     }
 }
